@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import emailjs from 'emailjs-com';
@@ -10,7 +10,7 @@ import emailjs from 'emailjs-com';
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss'
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   name = 'STANLEY OTIENO';
   profession = 'Software Developer';
 
@@ -27,11 +27,15 @@ export class HomePageComponent {
   submitMessage = '';
   submitSuccess = false;
 
-  // EmailJS configuration - Replace with your actual keys
+  ngOnInit() {
+    emailjs.init('-klph3bqufq-O8DOl');
+  }
+
+  // EmailJS configuration
   private emailJSConfig = {
-    serviceID: 'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-    templateID: 'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-    publicKey: 'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+    serviceID: 'service_j7bdppv',
+    templateID: 'template_c1wjqcw',
+    publicKey: '-klph3bqufq-O8DOl'
   };
 
   // Projects data (your existing projects)
@@ -191,7 +195,7 @@ export class HomePageComponent {
     this.isSubmitting = true;
     this.submitMessage = '';
 
-    // EmailJS send
+    // EmailJS send - Fixed parameters
     emailjs.send(
       this.emailJSConfig.serviceID,
       this.emailJSConfig.templateID,
@@ -201,6 +205,7 @@ export class HomePageComponent {
         subject: this.contactForm.subject,
         message: this.contactForm.message,
         to_name: 'Stanley Otieno',
+        to_email: 'stanleyonyango84@gmail.com', // Add this line
         reply_to: this.contactForm.email
       },
       this.emailJSConfig.publicKey
