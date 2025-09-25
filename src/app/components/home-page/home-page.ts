@@ -43,7 +43,7 @@ export class HomePageComponent implements OnInit {
     {
       id: 1,
       title: 'Bank Individual Onboarding',
-      image: '/assets/stanbic.jpeg',
+      image: 'assets/stanbic.jpeg',
       technologies: ['Angular', 'Spring Boot', 'PostgreSQL', 'kubernetes'],
       description: 'A bank individual onboarding system that streamlines the customer registration process with identity verification and document management.',
       demoUrl: 'https://mevin.online',
