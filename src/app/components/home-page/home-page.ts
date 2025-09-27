@@ -14,6 +14,8 @@ export class HomePageComponent implements OnInit {
   name = 'STANLEY OTIENO';
   profession = 'Software Developer';
 
+    backgroundImageUrl = 'assets/background2.jpeg';
+    
   // Contact form data
   contactForm = {
     name: '',
