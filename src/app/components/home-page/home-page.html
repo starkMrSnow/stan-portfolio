@@ -1,11 +1,11 @@
-<section id="home" class="hero-container"  [style.background-image]="'url(' + backgroundImageUrl + ')'">
+<section id="home" class="hero-container" [style.background-image]="'url(' + backgroundImageUrl + ')'">
   <nav class="main-nav">
     <div class="nav-links">
-      <a href="#" class="nav-link active" (click)="navigateToSection('home')">HOME</a>
-      <a href="#" class="nav-link" (click)="navigateToSection('about')">ABOUT</a>
-      <a href="#" class="nav-link" (click)="navigateToSection('skills')">SKILLS</a>
-      <a href="#" class="nav-link" (click)="navigateToSection('projects')">PROJECTS</a>
-      <a href="#" class="nav-link" (click)="navigateToSection('contact')">CONTACT</a>
+      <a href="#" class="nav-link" [class.active]="activeSection === 'home'" (click)="navigateToSection('home')">HOME</a>
+      <a href="#" class="nav-link" [class.active]="activeSection === 'about'" (click)="navigateToSection('about')">ABOUT</a>
+      <a href="#" class="nav-link" [class.active]="activeSection === 'skills'" (click)="navigateToSection('skills')">SKILLS</a>
+      <a href="#" class="nav-link" [class.active]="activeSection === 'projects'" (click)="navigateToSection('projects')">PROJECTS</a>
+      <a href="#" class="nav-link" [class.active]="activeSection === 'contact'" (click)="navigateToSection('contact')">CONTACT</a>
     </div>
   </nav>
 
@@ -72,7 +72,7 @@
         </div>
       </div>
       <h4>Java</h4>
-      <p>My experience with the language comes from years of working with spring boot framework</p>
+      <p>My experience with the language comes from years of working with Spring Boot framework</p>
     </div>
     
     <div class="skill-item">
@@ -83,7 +83,7 @@
         </div>
       </div>
       <h4>Python</h4>
-      <p>I have worked on web development using FastAPI and Django frameworks for python coding.</p>
+      <p>I have worked on web development using FastAPI and Django frameworks for Python coding.</p>
     </div>
     
     <div class="skill-item">
@@ -105,7 +105,7 @@
         </div>
       </div>
       <h4>Kubernetes</h4>
-      <p>Combined with docker for containerisation, I use kubernetes for cloud deployment</p>
+      <p>Combined with Docker for containerisation, I use Kubernetes for cloud deployment</p>
     </div>
     
     <div class="skill-item">

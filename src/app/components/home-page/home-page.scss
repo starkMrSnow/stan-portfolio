@@ -1014,6 +1014,7 @@
 }
 
 @media (max-width: 768px) {
+    
   .hero-name {
     font-size: 2.5rem;
   }
@@ -1057,12 +1058,37 @@
   
   .projects-viewport {
     width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1rem 0;
+
+          &::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #ef4444;
+      border-radius: 4px;
+      
+      &:hover {
+        background: #dc2626;
+      }
+    }
   }
   
   .project-card {
     flex: 0 0 280px;
   }
   
+.projects-track {
+    transition: none; /* Remove transform transition on mobile */
+    width: max-content; /* Allow content to determine width */
+  }
   .projects-container {
     padding: 3rem 1rem;
   }
@@ -1074,6 +1100,7 @@
   .contact-form-wrapper {
     padding: 1.5rem;
   }
+
 }
 
 @media (max-width: 480px) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import emailjs from 'emailjs-com';
@@ -14,8 +14,11 @@ export class HomePageComponent implements OnInit {
   name = 'STANLEY OTIENO';
   profession = 'Software Developer';
 
-    backgroundImageUrl = 'assets/background2.jpeg';
-    
+  backgroundImageUrl = 'assets/background2.jpeg';
+
+  // Navigation tracking
+  activeSection = 'home';
+
   // Contact form data
   contactForm = {
     name: '',
@@ -29,6 +32,10 @@ export class HomePageComponent implements OnInit {
   submitMessage = '';
   submitSuccess = false;
 
+  // Touch support for mobile
+  private touchStartX = 0;
+  private touchEndX = 0;
+
   ngOnInit() {
     emailjs.init('-klph3bqufq-O8DOl');
   }
@@ -40,7 +47,7 @@ export class HomePageComponent implements OnInit {
     publicKey: '-klph3bqufq-O8DOl'
   };
 
-  // Projects data (your existing projects)
+  // Projects data
   projects = [
     {
       id: 1,
@@ -64,7 +71,7 @@ export class HomePageComponent implements OnInit {
       id: 3,
       title: 'Customer Care chat Support System',
       image: 'assets/chat1.png',
-      technologies: ['SpringBoot', 'Web scokcets', 'Angular'],
+      technologies: ['SpringBoot', 'Web sockets', 'Angular'],
       description: 'Customer care chat support system that enables real-time communication between customers and support agents with chat history and notifications.',
       demoUrl: 'https://mevin.online/chat',
       githubUrl: 'https://github.com/your-username/project3'
@@ -82,7 +89,7 @@ export class HomePageComponent implements OnInit {
       id: 5,
       title: 'Vidrotech Company website',
       image: 'assets/background1.jpeg',
-      technologies: ['spring boot', 'Angular'],
+      technologies: ['Spring Boot', 'Angular'],
       description: 'A company website for Vidrotech showcasing their services, portfolio, and contact information with a modern design.',
       demoUrl: 'https://demo-link.com',
       githubUrl: 'https://github.com/your-username/project5'
@@ -91,7 +98,7 @@ export class HomePageComponent implements OnInit {
       id: 6,
       title: 'Maganji',
       image: 'assets/budget.jpeg',
-      technologies: ['React', 'Django', 'postgreSQL'],
+      technologies: ['React', 'Django', 'PostgreSQL'],
       description: 'A budget management system that helps users track their expenses, set budgets, and generate financial reports.',
       demoUrl: 'https://demo-link.com',
       githubUrl: 'https://github.com/your-username/project6'
@@ -124,11 +131,70 @@ export class HomePageComponent implements OnInit {
     return this.currentProjectIndex > 0;
   }
 
-  // Navigation methods
+  // Enhanced navigation with active state tracking
   navigateToSection(section: string) {
     const el = document.getElementById(section);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest' 
+      });
+      // Update active section
+      this.activeSection = section;
+      
+      // Update URL without reloading page
+      if (typeof history !== 'undefined') {
+        history.pushState(null, '', `#${section}`);
+      }
+    }
+  }
+
+  // Fixed: Scroll listener to update active nav state - removed [$event]
+  @HostListener('window:scroll')
+  onScroll() {
+    const sections = ['home', 'about', 'skills', 'education', 'projects', 'contact'];
+    const scrollPosition = window.pageYOffset + 100;
+    
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const offsetTop = element.offsetTop;
+        const height = element.offsetHeight;
+        
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
+          this.activeSection = section;
+          break;
+        }
+      }
+    }
+  }
+
+  // Fixed: Touch support for mobile swipe gestures - removed [$event]
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  @HostListener('touchend', ['$event'])
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  private handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = this.touchStartX - this.touchEndX;
+    
+    // Only handle swipes on larger screens where we have navigation
+    if (window.innerWidth > 768) {
+      if (diff > swipeThreshold) {
+        // Swipe left - next project
+        this.nextProject();
+      } else if (diff < -swipeThreshold) {
+        // Swipe right - previous project
+        this.previousProject();
+      }
     }
   }
 
@@ -137,7 +203,7 @@ export class HomePageComponent implements OnInit {
   }
   
   downloadCV() {
-    const cvUrl = 'assets/Stanley-Otieno-CV.pdf';
+    const cvUrl = 'assets/cv.pdf';
     const link = document.createElement('a');
     link.href = cvUrl;
     link.download = 'Stanley-Otieno-CV.pdf';
@@ -197,7 +263,7 @@ export class HomePageComponent implements OnInit {
     this.isSubmitting = true;
     this.submitMessage = '';
 
-    // EmailJS send - Fixed parameters
+    // EmailJS send
     emailjs.send(
       this.emailJSConfig.serviceID,
       this.emailJSConfig.templateID,
@@ -207,7 +273,7 @@ export class HomePageComponent implements OnInit {
         subject: this.contactForm.subject,
         message: this.contactForm.message,
         to_name: 'Stanley Otieno',
-        to_email: 'stanleyonyango84@gmail.com', // Add this line
+        to_email: 'stanleyonyango84@gmail.com',
         reply_to: this.contactForm.email
       },
       this.emailJSConfig.publicKey
