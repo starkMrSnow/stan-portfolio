@@ -1004,13 +1004,67 @@
 }
 
 @media (max-width: 968px) {
-  .contact-content {
+    .contact-content {
     text-align: center;
   }
   
   .contact-item {
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
+  
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Form input width fix */
+.contact-form {
+  .form-input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* THIS IS THE KEY FIX */
+    
+    &::placeholder {
+      color: #9ca3af;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: #ef4444;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    
+    &:invalid:not(:placeholder-shown) {
+      border-color: #f87171;
+    }
+  }
+  
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    box-sizing: border-box; /* THIS TOO */
+  }
+}
+
+.contact-form-wrapper {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box; /* AND THIS */
+  width: 100%;
+
 }
 
 @media (max-width: 768px) {
@@ -1097,13 +1151,54 @@
     padding: 3rem 1rem;
   }
   
-  .contact-form-wrapper {
+    .contact-form-wrapper {
     padding: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .about-details {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .details-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      
+      span {
+        min-width: auto;
+        margin-bottom: 0.25rem;
+      }
+    }
   }
 
 }
 
 @media (max-width: 480px) {
+    .contact-form-wrapper {
+    padding: 1rem;
+  }
+  
+  .contact-form .form-input {
+    font-size: 0.9rem;
+    padding: 0.875rem;
+  }
   .hero-name {
     font-size: 2rem;
   }
